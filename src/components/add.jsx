@@ -50,7 +50,7 @@ export default function Add({ onAdd, onCancel }) {
   // Disable logic
   const disableInterval = freq === 'once' || selectedDays.length > 0
   const disableDays     = interval !== ''
-  
+  const disableEnd = freq==='once';
   // Handlers
   function handleFreqChange(e) {
     setFreq(e.target.value)
@@ -126,8 +126,17 @@ export default function Add({ onAdd, onCancel }) {
               <form
                 onSubmit={e => {
                   e.preventDefault()
-                  // gather form values...
-                  // onAdd({ freq, start, interval, selectedDays, … })
+                  const today=new Date().toISOString().slice(0,10);
+                  const newTask={
+                    title: value.task,
+                    group: value.group || null,
+                    start: start || today,
+                    end: end || null,
+                    freq,
+                    interval: interval || null,
+                    selectedDays
+                  }
+                  onAdd(newTask);
                 }}
               >
                 
@@ -163,14 +172,16 @@ export default function Add({ onAdd, onCancel }) {
                   <div className="form-group col">
                     <label htmlFor="end">End Date</label>
                     <input
-          id="end"
-          type="date"
-          className={
-            'form-control' + (dateError ? ' is-invalid' : '')
-          }
+                    name="end"
+                    id="end"
+                    type="date"
+                    className={
+                      'form-control' + (dateError ? ' is-invalid' : '')
+                    }
           value={end}
           onChange={handleEndChange}
-          min={start || undefined}       // Blocks dates before start
+          min={start || undefined}   
+          disabled={disableEnd}    // Blocks dates before start
           onInvalid={e => setDateError(e.target.validationMessage)}
         />
         <div className="invalid-feedback">

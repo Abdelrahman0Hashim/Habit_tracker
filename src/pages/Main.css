@@ -5,10 +5,12 @@ div h1{
     display: inline;
 }
 
+.The{
+    z-index: 1000;
+}
+
 .add-fixed-btn{
     border-radius: 50%;
-    
-    
     position:fixed;
     bottom: 20px;
     right:20px;

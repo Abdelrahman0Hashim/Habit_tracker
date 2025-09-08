@@ -3,12 +3,19 @@ import Register from './pages/register';
 import LogIn from './pages/login';
 import Main from './pages/main';
 import './App.css'
+import Add from './components/add'
 
 
 function App() {
   
+  
   return (
+     <>
+     
+     
      <Main/>
+     
+     </>
   );
 }
 
